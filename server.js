@@ -11,9 +11,11 @@ server.use(cors());
 
 server.get("/api/users", (req, res) => {
     const users = db.getUsers();
-    if (users.length > 0) {
-        res.json(users);
-    } else {
+    try {
+        if (users.length > 0) {
+            res.json(users);
+        }
+    } catch (err) {
         res.status(500).json({
             errorMessage: "The users information could not be retrieved.",
         });
@@ -24,20 +26,17 @@ server.get("/api/users/:id", (req, res) => {
     // The param variable matches up to the name of our URL param above
     const user = db.getUserById(req.params.id);
 
-    // Since we're now taking in values from the client,
-    // we need to make sure the value is valid before trying to use it
-    if (user) {
-        res.status(200).json(user);
-    } else {
-        if (res.status(404)) {
-            res.json({
+    try {
+        if (!user) {
+            res.status(404).json({
                 errorMessage: "The user with the specified ID does not exist.",
             });
-        } else {
-            res.json({
-                errorMessage: "The user information could not be retrieved.",
-            });
         }
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({
+            errorMessage: "The user information could not be retrieved.",
+        });
     }
 });
 
@@ -55,9 +54,11 @@ server.post("/api/users", (req, res) => {
         bio: req.body.bio,
     });
 
-    if (newUser) {
-        res.status(201).json(newUser);
-    } else {
+    try {
+        if (newUser) {
+            res.status(201).json(newUser);
+        }
+    } catch (err) {
         res.status(500).json({
             errorMessage:
                 "There was an error while saving the user to the database",
@@ -74,43 +75,40 @@ server.put("/api/users/:id", (req, res) => {
 
     const user = db.getUserById(req.params.id);
 
-    // can't update a user that doesn't exist, so check first
-    if (user) {
+    try {
+        if (!user) {
+            res.status(404).json({
+                errorMessage: "The user with the specified ID does not exist.",
+            });
+        }
         const updatedUser = db.updateUser(user.id, {
             name: req.body.name || user.name,
             bio: req.body.bio || user.bio,
         });
 
         res.status(200).json(updatedUser);
-    } else {
-        if (res.status(404)) {
-            res.json({
-                errorMessage: "The user with the specified ID does not exist.",
-            });
-        } else {
-            res.json({
-                errorMessage: "The user information could not be retrieved.",
-            });
-        }
+    } catch (err) {
+        res.status(500).json({
+            errorMessage: "The user information could not be retrieved.",
+        });
     }
 });
 
 server.delete("/api/users/:id", (req, res) => {
     const user = db.getUserById(req.params.id);
 
-    if (user) {
-        db.deleteUser(user.id);
-        res.status(204).end();
-    } else {
-        if (res.status(404)) {
-            res.json({
+    try {
+        if (!user) {
+            res.status(400).json({
                 errorMessage: "The user with the specified ID does not exist.",
             });
-        } else {
-            res.json({
-                errorMessage: "The user could not be removed.",
-            });
         }
+        db.deleteUser(user.id);
+        res.status(204).end();
+    } catch (err) {
+        res.status(500).json({
+            errorMessage: "The user could not be removed.",
+        });
     }
 });
 
