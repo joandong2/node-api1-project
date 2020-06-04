@@ -4,7 +4,7 @@ import {
     GET_USERS,
     GET_USER_BY_ID,
     ADD_USER,
-    EDIT_USER,
+    UPDATE_USER,
     DELETE_USER,
 } from "../actions/users";
 
@@ -31,41 +31,40 @@ export function users(state = initialState, action) {
                 isLoaded: false,
                 message: action.payload,
             };
-        // case GET_ARTICLE:
-        //     return {
-        //         ...state,
-        //         article: action.payload,
-        //         isLoading: false,
-        //         isLoaded: true,
-        //     };
         case GET_USERS:
-            //case GET_ARTICLES_BY_ID:
             return {
                 ...state,
                 users: action.payload,
                 isLoading: false,
                 isLoaded: true,
             };
-        // case POST_ARTICLE:
+        case GET_USER_BY_ID:
+            return {
+                ...state,
+                user: action.payload,
+                isLoading: false,
+                isLoaded: true,
+            };
+        case ADD_USER:
+            return {
+                ...state,
+                isLoading: false,
+                isLoaded: true,
+                users: [...state.users, action.payload],
+            };
+        case UPDATE_USER:
+            return {
+                ...state,
+                isLoading: false,
+                isLoaded: true,
+                users: action.payload,
+            };
         case DELETE_USER:
             return {
                 ...state,
                 isLoading: false,
                 isLoaded: true,
             };
-        // case EDIT_ARTICLE:
-        //     return {
-        //         ...state,
-        //         isLoading: false,
-        //         isLoaded: true,
-        //         article: action.payload.article,
-        //         message: action.payload.message,
-        //     };
-        // case GET_CATEGORIES:
-        //     return {
-        //         ...state,
-        //         categories: action.payload,
-        //     };
         default:
             return state;
     }
