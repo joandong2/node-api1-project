@@ -1,8 +1,13 @@
-const users = [
+let users = [
     {
         id: 1, // hint: use the shortid npm package to generate it
         name: "Jane Doe", // String, required
         bio: "Not Tarzan's Wife, another Jane", // String, required
+    },
+    {
+        id: 2, // hint: use the shortid npm package to generate it
+        name: "John Doe", // String, required
+        bio: "Lorem ipsum dolor..", // String, required
     },
 ];
 
@@ -16,7 +21,7 @@ function getUserById(id) {
 
 function createUser(data) {
     const payload = {
-        id: String(users.length + 1),
+        id: Number(users.length + 1),
         ...data,
     };
 
@@ -35,7 +40,7 @@ function updateUser(id, data) {
 }
 
 function deleteUser(id) {
-    users = users.filter((user) => user.id != Number(id));
+    users = users.filter((user) => user.id != id);
 }
 
 module.exports = {

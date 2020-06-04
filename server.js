@@ -100,8 +100,6 @@ server.delete("/api/users/:id", (req, res) => {
 
     if (user) {
         db.deleteUser(user.id);
-        // 204 is just a successful empty response,
-        // since we don't really have anything to return
         res.status(204).end();
     } else {
         if (res.status(404)) {
