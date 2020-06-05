@@ -89,7 +89,7 @@ export const deletetUser = (id) => (dispatch) => {
         .then((res) => {
             //console.log("axios get by id result", res);
             dispatch({ type: DELETE_USER });
-            window.location.replace("/");
+            //window.location.replace("/");
         })
         .catch((err) => {
             //console.log("Err is: ", err);

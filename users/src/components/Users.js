@@ -4,12 +4,14 @@ import { getUsers } from "../actions/users.js";
 import { getUserById } from "../actions/users.js";
 import { addUser } from "../actions/users.js";
 import { updateUser } from "../actions/users.js";
+import { deletetUser } from "../actions/users.js";
 
 const Users = ({
     getUsers,
     getUserById,
     addUser,
     updateUser,
+    deletetUser,
     isLoaded,
     users,
     user,
@@ -54,10 +56,7 @@ const Users = ({
     return (
         <div className="row">
             <div className="col-md-12">
-                <h2>Users</h2>
                 <div className="new-user">
-                    <p className="form-heading">Add User</p>
-
                     <form onSubmit={submitForm} className="form-inline">
                         <input
                             type="text"
@@ -120,9 +119,8 @@ const Users = ({
                                           </button>
                                           <button
                                               onClick={() => {
-                                                  window.location.replace(
-                                                      `/delete/${user.id}`
-                                                  );
+                                                  deletetUser(user.id);
+                                                  window.location.replace("/");
                                               }}
                                               className="btn btn-danger"
                                           >
@@ -155,4 +153,5 @@ export default connect(mapStateToProps, {
     getUserById,
     addUser,
     updateUser,
+    deletetUser,
 })(Users);
