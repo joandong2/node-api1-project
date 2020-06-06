@@ -75,7 +75,7 @@ const Users = ({
                             value={formState.bio}
                         />
                         <button type="submit" className="btn btn-warning">
-                            Submit
+                            {editState ? "Update" : "Submit"}
                         </button>
                     </form>
                 </div>
@@ -118,7 +118,9 @@ const Users = ({
                                               Edit
                                           </button>
                                           <button
-                                              onClick={() => {
+                                              //type="button"
+                                              onClick={(e) => {
+                                                  e.stopPropagation();
                                                   deletetUser(user.id);
                                                   window.location.replace("/");
                                               }}
