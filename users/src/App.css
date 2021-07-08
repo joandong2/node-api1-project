@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+body {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+.App {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    padding-top: 5rem;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+form input,
+table button {
+    margin-right: 10px;
+}
